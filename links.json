@@ -1,0 +1,14 @@
+{
+  "_comment": "WCTA Cyber games data. Edit THIS FILE to add/remove games or categories - no code changes needed. Each game needs: category, name, url, description. Categories repeat freely; the page groups them automatically, assigns each a colour, and builds the filter buttons, boot-log mount lines, headings, counts and search index from whatever it finds here. Category display order follows the order games first appear below. NOTE: JSON does not allow a trailing comma after the last item in the tools array - the last entry must end with } and no comma. (The array is still called 'tools' so the page code matches apps.wctacyber.org.)",
+  "updated": "2026-10-15",
+  "tools": [
+    {"category": "Security+", "name": "The Sec Plus Connections Game", "url": "https://secplusconnections.vercel.app/", "description": "Can YOU make all of the connections?"},
+    {"category": "Security+", "name": "SIEM Triage Simulator", "url": "https://siem-triage-sim.vercel.app/", "description": "Identify and fight off attacks in real time from the SIEM console."},
+
+    {"category": "A+/Tech+", "name": "Rootfall: A Linux Sandbox Game", "url": "https://rootfall.vercel.app/", "description": "Can you get through every level and prove your Linux dominance?"},
+
+    {"category": "AP Cyber", "name": "AP Cyber Crossword Puzzle", "url": "https://crossword-five-tau.vercel.app/", "description": "How fast can you solve a crossword?"},
+    {"category": "AP Cyber", "name": "AP Cyber Connections", "url": "https://linkup-jvfo.vercel.app/", "description": "Can you make the connections?"},
+    {"category": "AP Cyber", "name": "Eyes on the Perimeter", "url": "https://eyes-on-the-perimeter.vercel.app/", "description": "Place cameras, sensors, guards, and door controls on 8 floorplans, then replay the break-in."}
+  ]
+}

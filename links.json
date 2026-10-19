@@ -7,6 +7,7 @@
     {"name": "Connections (Security+)", "url": "https://secplusconnections.vercel.app/", "description": "Can YOU make all of the connections?"},
     {"name": "The Memory Game", "url": "https://memoryflip-alpha.vercel.app/", "description": "Test your memory on a number of cyber related topics"},
     {"name": "OSI Model Mania", "url": "https://osigame.vercel.app/", "description": "Can you manipulate the OSI Model and all of it's layers?"},
+    {"name": "Malware Madness", "url": "https://malwaremadness.vercel.app/", "description": "Prove that you know all there is to know about Malware!"},
     {"name": "Rootfall", "url": "https://rootfall.vercel.app/", "description": "A Linux sandbox game. Can you get through every level and prove your Linux dominance?"}
   ]
 }

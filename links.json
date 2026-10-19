@@ -5,8 +5,6 @@
     {"name": "Crossword", "url": "https://crossword-five-tau.vercel.app/", "description": "How fast can you solve a cybersecurity crossword?"},
     {"name": "Connections (AP Cyber)", "url": "https://linkup-jvfo.vercel.app/", "description": "Find the groups and make the connections."},
     {"name": "Connections (Security+)", "url": "https://secplusconnections.vercel.app/", "description": "Can YOU make all of the connections?"},
-    {"name": "Rootfall", "url": "https://rootfall.vercel.app/", "description": "A Linux sandbox game. Can you get through every level and prove your Linux dominance?"},
-    {"name": "SIEM Triage Simulator", "url": "https://siem-triage-sim.vercel.app/", "description": "Identify and fight off attacks in real time from the SIEM console."},
-    {"name": "Eyes on the Perimeter", "url": "https://eyes-on-the-perimeter.vercel.app/", "description": "Place cameras, sensors, guards, and door controls on 8 floorplans, then replay the break-in."}
+    {"name": "Rootfall", "url": "https://rootfall.vercel.app/", "description": "A Linux sandbox game. Can you get through every level and prove your Linux dominance?"}
   ]
 }

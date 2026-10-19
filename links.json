@@ -5,6 +5,7 @@
     {"name": "Crossword", "url": "https://crossword-five-tau.vercel.app/", "description": "How fast can you solve a cybersecurity crossword?"},
     {"name": "Connections (AP Cyber)", "url": "https://linkup-jvfo.vercel.app/", "description": "Find the groups and make the connections."},
     {"name": "Connections (Security+)", "url": "https://secplusconnections.vercel.app/", "description": "Can YOU make all of the connections?"},
+    {"name": "The Memory Game", "url": "https://memoryflip-alpha.vercel.app/", "description": "Test your memory on a number of cyber related topics"},
     {"name": "Rootfall", "url": "https://rootfall.vercel.app/", "description": "A Linux sandbox game. Can you get through every level and prove your Linux dominance?"}
   ]
 }

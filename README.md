@@ -1,7 +1,8 @@
 # games.wctacyber.org — WCTA Cyber Games
 
-Sister site to apps.wctacyber.org. Same engine, same themes, same boot sequence;
-this one lists games instead of study tools. Single-file, no build step.
+Sister site to apps.wctacyber.org. Same look, themes and boot sequence, but a flat
+grid: **one card per game, no categories.** Each game is its own Vercel app and
+handles its own per-class tabs. Single-file, no build step.
 
 ```
 index.html    the page (design system + boot sequence + grid). Rarely edit.
@@ -14,15 +15,15 @@ CNAME         custom domain (games.wctacyber.org).
 Edit `links.json` only:
 
 ```json
-{ "category": "Security+", "name": "My New Game", "url": "https://my-game.vercel.app/", "description": "One short line students will read on the card." }
+{"name": "My New Game", "url": "https://my-game.vercel.app/", "description": "One short line students will read on the card."}
 ```
 
-Add the object to the `tools` array, bump `updated`, commit. Categories, colours,
-filters, counts, the boot log and search all rebuild from that array. A new
-`category` value creates a new group automatically.
+Add the object to the `games` array, bump `updated`, commit. Cards show in the order
+listed, numbered GAME 01, 02, ... with accent colours that cycle automatically. The
+top-bar count, boot log and search all rebuild from the array.
 
-Validate before committing: open `links.json` in a browser tab (Chrome shows a
-parse error immediately). Commas go between items, never after the last one.
+Validate before committing: open `links.json` in a browser tab (Chrome shows a parse
+error immediately). Commas go between items, never after the last one.
 
 ## Local preview
 
@@ -33,6 +34,7 @@ python3 -m http.server 8000   # fetch() is blocked on file://
 ## Notes
 
 - Background music loads from `https://apps.wctacyber.org/audio/eyes-on-the-perimeter.mp3`
-  (no copy kept here). To use a different track, add an `audio/` folder and
-  change the `<audio id="bgm">` src in `index.html`.
-- The six games seeded in `links.json` are also listed on apps.wctacyber.org.
+  (no copy kept here). To use a different track, add an `audio/` folder and change the
+  `<audio id="bgm">` src in `index.html`.
+- "Connections" currently has two cards (AP Cyber and Security+). When one tabbed
+  Connections app exists, replace both with a single "Connections" entry.

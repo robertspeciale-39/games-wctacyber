@@ -461,25 +461,6 @@ table.cs-table { width: 100%; border-collapse: collapse; }
 }
 .replay-boot:hover { color: var(--text-bright); }
 
-.filter-group { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
-.track-group { margin-bottom: var(--sp-8); }
-.track-group.is-hidden { display: none; }
-.track-hdr {
-  display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4);
-}
-.track-dot { width: 10px; height: 10px; border-radius: var(--r-pill); flex-shrink: 0; }
-.track-dot.u1 { background: var(--u1); } .track-dot.u2 { background: var(--u2); }
-.track-dot.u3 { background: var(--u3); } .track-dot.u4 { background: var(--u4); }
-.track-dot.u5 { background: var(--u5); }
-.track-name {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  letter-spacing: -0.02em; color: var(--text-bright);
-}
-.track-count {
-  font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--text-dim);
-  letter-spacing: .08em;
-}
-
 .tool-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
   gap: var(--sp-4);
@@ -492,23 +473,21 @@ table.cs-table { width: 100%; border-collapse: collapse; }
 }
 .tool-card:hover { background: var(--surface-2); border-color: var(--line-strong); transform: translateY(-2px); }
 .tool-card.is-hidden { display: none; }
-.tool-card[data-accent="u1"] { border-top-color: var(--u1); }
-.tool-card[data-accent="u2"] { border-top-color: var(--u2); }
-.tool-card[data-accent="u3"] { border-top-color: var(--u3); }
-.tool-card[data-accent="u4"] { border-top-color: var(--u4); }
-.tool-card[data-accent="u5"] { border-top-color: var(--u5); }
+.tool-card[data-accent="u1"] { border-top-color: var(--u1); --acc: var(--u1); }
+.tool-card[data-accent="u2"] { border-top-color: var(--u2); --acc: var(--u2); }
+.tool-card[data-accent="u3"] { border-top-color: var(--u3); --acc: var(--u3); }
+.tool-card[data-accent="u4"] { border-top-color: var(--u4); --acc: var(--u4); }
+.tool-card[data-accent="u5"] { border-top-color: var(--u5); --acc: var(--u5); }
+.tool-card-idx {
+  font-family: var(--font-mono); font-size: var(--fs-2xs); font-weight: 600;
+  letter-spacing: .12em; color: var(--acc, var(--text-dim)); margin-bottom: var(--sp-2);
+}
 .tool-card-title {
   font-family: var(--font-display); font-weight: 650; font-size: var(--fs-md);
   letter-spacing: -0.015em; color: var(--text-bright); margin-bottom: var(--sp-1);
 }
 .tool-card-desc { font-size: var(--fs-sm); color: var(--text-2); margin-bottom: var(--sp-3); }
-.tool-card-tags { display: flex; gap: var(--sp-1); flex-wrap: wrap; }
-.tool-pill { font-size: var(--fs-2xs); padding: 3px var(--sp-2); }
-.tool-pill.u1 { color: var(--u1); border-color: var(--u1); background: var(--u1s); }
-.tool-pill.u2 { color: var(--u2); border-color: var(--u2); background: var(--u2s); }
-.tool-pill.u3 { color: var(--u3); border-color: var(--u3); background: var(--u3s); }
-.tool-pill.u4 { color: var(--u4); border-color: var(--u4); background: var(--u4s); }
-.tool-pill.u5 { color: var(--u5); border-color: var(--u5); background: var(--u5s); }
+.tool-card-foot { display: flex; }
 .tool-empty { color: var(--text-dim); font-size: var(--fs-sm); padding: var(--sp-4) 0; }
 .tool-empty.is-hidden { display: none; }
 .tool-launch {
@@ -567,7 +546,7 @@ table.cs-table { width: 100%; border-collapse: collapse; }
   .main { display: block !important; }
   .library { display: block !important; }
   .panel, .stat-card, .tool-card { border-color: #ccc; background: #fff; break-inside: avoid; }
-  .panel-title, .stat-val, .row-title, .tool-card-title, .library-title, .track-name { color: #000; }
+  .panel-title, .stat-val, .row-title, .tool-card-title, .library-title { color: #000; }
 }
 
 /* ── Background music toggle ── */
@@ -633,7 +612,7 @@ table.cs-table { width: 100%; border-collapse: collapse; }
   <div class="library" id="library">
     <div class="library-intro">
       <h1 class="library-title">WCTA Cyber Games</h1>
-      <p class="library-sub">Learn by playing. Puzzles, simulators and challenges for every track — filter by track or search by name. New games mount here as they ship.</p>
+      <p class="library-sub">Learn by playing. Puzzles, simulators and challenges — pick a game, then pick your class. New games mount here as they ship.</p>
       <div class="library-intro-actions">
         <button type="button" class="replay-boot" id="replayBoot">▸ Replay boot sequence</button>
         <button type="button" class="replay-boot sound-toggle" aria-pressed="false">🔈 Sound off</button>
@@ -642,7 +621,6 @@ table.cs-table { width: 100%; border-collapse: collapse; }
 
     <div class="filter-bar">
       <input type="text" id="toolSearch" placeholder="Search games…" aria-label="Search games">
-      <div class="filter-group" id="filterGroup" role="group" aria-label="Filter by track"></div>
     </div>
 
     <div class="notice is-hidden" id="loadError" role="alert">
@@ -652,7 +630,7 @@ table.cs-table { width: 100%; border-collapse: collapse; }
 
     <p class="tool-empty is-hidden" id="noResults">No games match that search.</p>
 
-    <div id="trackGroups"><!-- rendered by JS from links.json --></div>
+    <div class="tool-grid" id="gameGrid"><!-- one card per game, rendered by JS from links.json --></div>
   </div>
 
 </main>
@@ -748,52 +726,31 @@ function csSetTheme(name, persist) {
 //  APP LOGIC — WCTA Cyber Games
 // ══════════════════════════════════════════
 
-// ┌──────────────────────────────────────────────────────────────────┐
+// ┌────────────────────────────────────────────────────────────────┐
 // │  DATA lives in links.json — NOT in this file.                    │
-// │  To add / edit / remove a game or a category, edit links.json     │
-// │  only. Categories are derived automatically from whatever         │
-// │  "category" values appear there: the boot log, colour coding,     │
-// │  filter buttons, group headings, counts and search all rebuild    │
-// │  themselves. No code change needed, ever.                         │
-// │                                                                   │
-// │  Each game: { "category", "name", "url", "description" }          │
-// └──────────────────────────────────────────────────────────────────┘
+// │  Add / edit / remove a game by editing the "games" array there.   │
+// │  One card per game. No categories. Each game:                     │
+// │  { "name", "url", "description" }                                 │
+// └────────────────────────────────────────────────────────────────┘
 
-// Accent hues cycle across however many categories exist.
-// Order picked so the first three categories stay clearly distinct in ALL five
-// themes — u1 and u2 are both greens under Matrix, so u2 is deliberately last.
+// Card accent colours cycle by position. u1 and u2 are both greens under
+// Matrix, so u2 goes last to keep neighbouring cards distinct.
 const ACCENTS = ['u1', 'u3', 'u4', 'u5', 'u2'];
 
 let TOOLS = [];        // populated from links.json
-let CATEGORIES = [];   // [{ key, name, accent, count }]
 let UPDATED = '';
 
 function slugify(str) {
-  return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'cat';
-}
-
-function buildCategories() {
-  const seen = [];
-  TOOLS.forEach(function (t) {
-    if (seen.indexOf(t.category) === -1) seen.push(t.category);
-  });
-  CATEGORIES = seen.map(function (name, i) {
-    return {
-      key: slugify(name),
-      name: name,
-      accent: ACCENTS[i % ACCENTS.length],
-      count: TOOLS.filter(function (t) { return t.category === name; }).length
-    };
-  });
+  return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'game';
 }
 
 async function loadTools() {
   const res = await fetch('links.json');
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const data = await res.json();
-  TOOLS = (data.tools || []).filter(function (t) { return t && t.name && t.url; });
+  TOOLS = (data.games || []).filter(function (t) { return t && t.name && t.url; });
+  TOOLS.forEach(function (t, i) { t.accent = ACCENTS[i % ACCENTS.length]; t.key = slugify(t.name); });
   UPDATED = data.updated || '';
-  buildCategories();
 }
 
 const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -888,13 +845,9 @@ function buildBootScript() {
     { label: 'Fetching links.json', status: TOOLS.length + ' records', cls: 'ok' }
   ];
 
-  // One mount line per category actually present in links.json.
-  CATEGORIES.forEach(function (cat) {
-    lines.push({
-      label: 'Mounting /' + cat.key + ' [ro]',
-      status: cat.count + (cat.count === 1 ? ' module' : ' modules'),
-      cls: cat.accent
-    });
+  // One mount line per game in links.json.
+  TOOLS.forEach(function (g) {
+    lines.push({ label: 'Mounting /' + g.key + ' [ro]', status: 'READY', cls: g.accent });
   });
 
   lines.push({ label: 'Verifying module integrity (SHA-256)', status: 'OK', cls: 'ok' });
@@ -999,116 +952,38 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-// Filter buttons are generated from the categories found in links.json.
-function renderFilters() {
-  const bar = document.getElementById('filterGroup');
-  bar.innerHTML = '';
-  const all = document.createElement('button');
-  all.type = 'button';
-  all.className = 'filter-btn active';
-  all.dataset.filter = 'all';
-  all.setAttribute('aria-pressed', 'true');
-  all.textContent = 'All';
-  bar.appendChild(all);
-
-  CATEGORIES.forEach(function (cat) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'filter-btn';
-    b.dataset.filter = cat.key;
-    b.setAttribute('aria-pressed', 'false');
-    b.textContent = cat.name;
-    bar.appendChild(b);
-  });
-
-  // Only worth showing the track filter when there's more than one track.
-  document.getElementById('filterGroup').style.display = CATEGORIES.length > 1 ? '' : 'none';
-
-  bar.querySelectorAll('.filter-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      bar.querySelectorAll('.filter-btn').forEach(function (b) {
-        b.classList.remove('active');
-        b.setAttribute('aria-pressed', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-pressed', 'true');
-      applyFilters();
-    });
-  });
-}
-
 function renderLibrary() {
-  const wrap = document.getElementById('trackGroups');
-  wrap.innerHTML = '';
-
-  CATEGORIES.forEach(function (cat) {
-    const items = TOOLS.filter(function (t) { return t.category === cat.name; });
-    if (!items.length) return;
-
-    const group = document.createElement('section');
-    group.className = 'track-group';
-    group.dataset.track = cat.key;
-
-    const hdr = document.createElement('div');
-    hdr.className = 'track-hdr';
-    hdr.innerHTML =
-      '<span class="track-dot ' + cat.accent + '"></span>' +
-      '<h2 class="track-name">' + esc(cat.name) + '</h2>' +
-      '<span class="track-count">' + items.length + ' game' + (items.length === 1 ? '' : 's') + '</span>';
-    group.appendChild(hdr);
-
-    const grid = document.createElement('div');
-    grid.className = 'tool-grid';
-
-    items.forEach(function (tool) {
-      const card = document.createElement('a');
-      card.href = tool.url;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
-      card.className = 'tool-card';
-      card.dataset.accent = cat.accent;
-      card.dataset.name = (tool.name + ' ' + (tool.description || '') + ' ' + tool.category).toLowerCase();
-
-      card.innerHTML =
-        '<div class="tool-card-title">' + esc(tool.name) + '</div>' +
-        '<div class="tool-card-desc">' + esc(tool.description || '') + '</div>' +
-        '<div class="tool-card-tags">' +
-          '<span class="pill tool-pill ' + cat.accent + '">' + esc(cat.name) + '</span>' +
-          '<span class="tool-launch">Launch →</span>' +
-        '</div>';
-      grid.appendChild(card);
-    });
-
-    group.appendChild(grid);
-    wrap.appendChild(group);
+  const grid = document.getElementById('gameGrid');
+  grid.innerHTML = '';
+  TOOLS.forEach(function (game, i) {
+    const card = document.createElement('a');
+    card.href = game.url;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.className = 'tool-card';
+    card.dataset.accent = game.accent;
+    card.dataset.name = (game.name + ' ' + (game.description || '')).toLowerCase();
+    card.innerHTML =
+      '<div class="tool-card-idx">GAME ' + String(i + 1).padStart(2, '0') + '</div>' +
+      '<div class="tool-card-title">' + esc(game.name) + '</div>' +
+      '<div class="tool-card-desc">' + esc(game.description || '') + '</div>' +
+      '<div class="tool-card-foot"><span class="tool-launch">Launch →</span></div>';
+    grid.appendChild(card);
   });
 }
 
-function applyFilters() {
-  const activeBtn = document.querySelector('.filter-btn.active');
-  const activeFilter = activeBtn ? activeBtn.dataset.filter : 'all';
+function applySearch() {
   const query = document.getElementById('toolSearch').value.trim().toLowerCase();
-  let totalVisible = 0;
-
-  document.querySelectorAll('.track-group').forEach(function (group) {
-    const trackMatches = activeFilter === 'all' || group.dataset.track === activeFilter;
-    let visibleCount = 0;
-
-    group.querySelectorAll('.tool-card').forEach(function (card) {
-      const nameMatches = !query || card.dataset.name.indexOf(query) !== -1;
-      const show = trackMatches && nameMatches;
-      card.classList.toggle('is-hidden', !show);
-      if (show) visibleCount++;
-    });
-
-    group.classList.toggle('is-hidden', visibleCount === 0);
-    totalVisible += visibleCount;
+  let visible = 0;
+  document.querySelectorAll('.tool-card').forEach(function (card) {
+    const show = !query || card.dataset.name.indexOf(query) !== -1;
+    card.classList.toggle('is-hidden', !show);
+    if (show) visible++;
   });
-
-  document.getElementById('noResults').classList.toggle('is-hidden', totalVisible > 0);
+  document.getElementById('noResults').classList.toggle('is-hidden', visible > 0);
 }
 
-document.getElementById('toolSearch').addEventListener('input', applyFilters);
+document.getElementById('toolSearch').addEventListener('input', applySearch);
 
 // ---- Init: data first, then boot animation ------------------------------
 (async function init() {
@@ -1125,7 +1000,6 @@ document.getElementById('toolSearch').addEventListener('input', applyFilters);
     return;
   }
 
-  renderFilters();
   renderLibrary();
   if (statEl) {
     statEl.textContent = TOOLS.length + ' GAMES' + (UPDATED ? ' · UPDATED ' + UPDATED : '');

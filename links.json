@@ -3,6 +3,7 @@
   "updated": "2026-10-18",
   "games": [
     {"name": "Crossword", "url": "https://crossword-five-tau.vercel.app/", "description": "How fast can you solve a cybersecurity crossword?"},
+    {"name": "SegFault", "url": "https://segfault-nine.vercel.app/", "description": "The world of subnetting and VLANS for AP Cyber?"},
     {"name": "Connections (AP Cyber)", "url": "https://linkup-jvfo.vercel.app/", "description": "Find the groups and make the connections."},
     {"name": "Connections (Security+)", "url": "https://secplusconnections.vercel.app/", "description": "Can YOU make all of the connections?"},
     {"name": "The Memory Game", "url": "https://memoryflip-alpha.vercel.app/", "description": "Test your memory on a number of cyber related topics"},
